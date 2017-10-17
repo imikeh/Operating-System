@@ -1,0 +1,55 @@
+1.  a. page 0 因為 R M = 0 0
+    b. page 2 因為 120 是第一個進來 
+    c. page 1 因為 Reference 260
+    d. page 0 因為 Loaded 為126 且 R M = 0 0
+
+2.  page D	
+
+3.  Real memory uses Physical addresses.
+    These are the members that the memory chips react to on the bus. 
+    Virtual addresses are the logical addresses that nrefer to a process' address space. 
+    Thus, a machine with a 16-bit word can generate virtual addresses upto 64K, regardless of whether the machine has more or less memory than 64 KB
+
+4.  不可能
+  
+5.  The aging algorithm: First, the counters are shifted right 1 bit. Second, the R bit is added to the leftmost bit.
+    After the last tick, the values of the counters are:
+    page 0: 01101110
+    page 1: 01001001
+    page 2: 00110111
+    page 3: 10001011
+
+1.
+給0~9隨機的數字
+然後資料量是讓人輸入
+然後放到一個也是讓人輸入大小的地方
+把資料一個一個放進去
+每放一個就是一個fault
+因為是亂數產生會有重複的數字
+重複的就不做fault
+然後如果滿了
+就把第一個進來踢走再放入
+然後output fault
+
+
+2.
+就是最不常被用到的先被踢出去
+當有重複的時候也是不用加
+而且他會被視為最近使用
+所以他的順序會變到後面
+
+1 2 3 4 5 6 @ 1 1 7 8
+2 3 4 5 6 1 @ 1 7 8
+2 3 4 5 6 1 @ 7 8  --> pop 2
+3 4 5 6 1 7 @ 8
+
+我的1有重複
+之後先踢掉的是2
+六個
+你放7的時候全都滿了
+所以要去 把2踢走 放7
+
+
+幾個value跟幾個位子
+放到的地方沒有重複
+重複的就沒做事將

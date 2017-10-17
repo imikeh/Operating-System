@@ -1,0 +1,86 @@
+1.	
+A symbolic link merely contains a text string that is interpreted and followed by the 
+operating system as a path to another file or directory. It is a file on its own and can
+ exist independently of its target. If a symbolic link is deleted, its target remains 
+unaffected. If the target is moved, renamed or deleted, any symbolic link that used
+ to point to it continues to exist but now points to a non-existing file. Symbolic links
+ pointing to non-existing files are sometimes called orphaned.
+
+Under Unix, symbolic links are created with the same ln shell command as hard links, 
+but they behave very differently from the latter. Hard links are just (possibly multiple)
+names associated with a file and cannot exist without their associated file. When one 
+hard link is moved, renamed or deleted, any other hard links referring to the same file
+ data remain unaffected. Only when the last hard link to a file is deleted, the file content 
+disappears. Unlike hard links, symbolic links can also point to directories and cross volumes.
+
+The interesting thing about hard links is that there is no difference between the original
+ file and the link: they are just two names connected to the same inode. The disadvantage
+of using them is that hard links must exist on the same device, which is rather limiting. 
+But, if possible, you should always create a hard link instead of a symbolic link because they
+ are faster. An important advantage for symbolic link is that it can be used to refer to a file
+ that is anywhere, even on a server on the other side of the world
+
+Hard Link ¥u¬O¦b¬Y­Ó¥Ø¿ý¤U·s¼W¤@­Ó¸ÓÀÉ®×ªºÃö³s¸ê®Æ¦Ó¤w¡I 
+¥Ø¿ý©Ò°O¿ýªºÃö³s¸ê®Æªº inode ©ñ¸m¦b A ³B¡A¦Ó¥Ñ /root ³o­Ó¥Ø¿ý¤UªºÃö³s¸ê®Æ¡A crontab ¦P¼Ë¤]«ü¨ì A ³Bªº inode 
+¦n³B--¡y¦w¥þ¡z
+„Í¤£ºÞ­þ¤@­ÓÀÉ®×³Q§R°£¤F¡A¨ä¹ê¶È¬O²¾°£¤@µ§¥Ø¿ý©³¤UªºÀÉ®×Ãö³s©Ê¸ê®Æ¡A¨Ã¨S¦³§ó°Ê¨ì­ì¥»ÀÉ®×ªº inode »P block ¸ê®Æ 
+„Í¤£½×¥Ñ¨º­Ó¥Ø¿ý³sµ²¨ì¥¿½Tªº crontab ªº inode »P block ¡A ³£¥i¥H¥¿½TµL»~ªº¶i¦æ¸ê®Æªº­×§ï 
+„Xhard link ³]©w³sµ²ÀÉ®É¡AºÏºÐªºªÅ¶¡»P inode ªº¼Æ¥Ø³£¤£·|§ïÅÜ 
+„Xhard link ¥u¬O¦b¬Y­Ó¥Ø¿ý¤Uªº block ¦h¼g¤J¤@­ÓÃö³s¸ê®Æ¡A©Ò¥H·íµM¤£·|¥Î±¼ inode »PºÏºÐªÅ¶¡
+„Xhard link ¬O¦b¦P¤@­Ó partition ¤W­±¶i¦æ¸ê®ÆÃö³sªº«Ø¥ß¡A©Ò¥H hard link ¬O¦³­­¨îªº 
+„Í¤£¯à¸ó Filesystem 
+„Í¤£¯à link ¥Ø¿ý
+
+„XSymbolic link ´N¬O¦b«Ø¥ß¤@­Ó¿W¥ßªºÀÉ®×¡A ¦Ó³o­ÓÀÉ®×·|Åý¸ê®ÆªºÅª¨ú«ü¦V¥L link ªº¨º­ÓÀÉ®×¤º®e 
+„Í§Q¥ÎÀÉ®×¨Ó°µ¬°«ü¦Vªº°Ê§@ 
+„Í·í¨Ó·½ÀÉ³Q§R°£¤§«á¡Asymbolic link ªºÀÉ®×·|¡y¶}¤£¤F¡z 
+
+2.	
+The time per block is built up of three components: seek time, rotational latency (average = 0.5 total latency), and transfer time. In all cases the rotational latency plus transfer time is the same, 5.02 msec per block read. Only the seek time differs. For 100 random seeks it is 500 msec; for clustered file seeks it is 10 msec. Thus for randomly placed files the total is 502 + 500 = 1002 msec, and for clustered files it is 502 + 10 = 512 msec.
+
+3.	
+(a)	LRU replacement
+(b)	Optimal replacement
+
+Number of frames	LRU	FIFO	Optimal
+1	20	20	20
+2	18	18	15
+3	15	16	11
+4	10	14	8
+5	8	10	7
+6	7	10	7
+7	7	7	7
+
+
+4.	
+(a)	The block is added at the beginning.
+(b)	The block is added in the middle.
+(c)	The block is added at the end.
+(d)	The block is removed from the beginning.
+(e)	The block is removed from the middle.
+
+	Contiguous	Linked	Indexed
+(A)	201	1	1
+(B)	101	52	1
+(C)	1	3	1
+(D)	198	1	0
+(E)	98	52	0
+
+5.	A certain computer provides its users with a virtual memory space 
+of 232 bytes.  The computer has 218 bytes of physical memory, and a TLB.  
+The virtual memory is  implemented by paging, and the page size is 4096 bytes.
+  A user process generates the virtual address 1112345616.  Explain how the 
+system establishes the corresponding physical location. Distinguish between
+ hardware and software operations.The hardware separates the address into 
+the page address 1112316 and offset 45616. The TLB attempts to translate the
+ address -- if found, the TLB's page frame address is added to 456 and is the 
+physical address. If the address was not found in the TLB, either hardware or 
+software (the TLB trap handler) then maps the page 11123 through the page 
+table. If valid, the TLB is updated and the original instruction is restarted. Many
+ of you confused a TLB miss with a page fault; TLB's are usually much smaller 
+than a page table, so TLB misses are common, even for loaded pages. If the
+ page table indicated the entry was invalid then a page fault occurs. Software
+ operations follow: At this point the page must be retrieved, loaded into a page
+ frame, added to the page table, added to the TLB, and then the original 
+instruction can be restarted.
+

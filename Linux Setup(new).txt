@@ -1,0 +1,92 @@
+########################################第一部分是安裝VirtualBox########################################
+
+1.首先下載VirtualBox的安裝程式 安裝VirtualBox 設定都用預設
+http://download.virtualbox.org/virtualbox/4.3.8/VirtualBox-4.3.8-92456-Win.exe
+
+2.下載Ubuntu 12.04
+http://tw.releases.ubuntu.com/precise/ubuntu-12.04.4-desktop-i386.iso
+
+3.啟動桌面的VirtualBox 點選"新增"並按"下一步"
+
+4.給Box取個名稱 作業系統Linux 版本Ubuntu 記憶體配置建議1024MB
+
+5."啟動硬碟"-"新建硬碟"-"下一步"-"VDI"-"固定大小(20G)"-"下一步"-"建立"
+
+6.等待硬碟建置完成之後按下確定 點選"設定值"
+
+7."系統"-"處理器" 可以更改啟用核心數目
+
+8."顯示"-"視訊記憶體" 128MB
+
+9.點選"存放裝置"-"IDE控制器"-"空" 
+
+10."設定虛擬光碟機"(光碟圖案)-"選擇虛擬檔案" ubuntu-12.04-desktop-i386.iso
+
+11."確定"-"啟動"
+
+########################################第二部分是安裝Ubuntu########################################
+
+1.確定電腦裡面有可以被讀取的Ubuntu媒體
+
+2.等待開機到安裝準備畫面 左邊選擇語系為中文
+
+3."安裝Ubuntu" 磁碟設定如果是VirtualBox可以直接按下確認 
+  如果是安裝到實體電腦則須自行確認選項
+
+4.安裝開始後 第一項填寫資料為地區"Taipai" 第二項是鍵盤 直接確認即可
+
+5.設定系統名稱 使用者帳號 登入密碼 之後就可以等待安裝完成 重新啟動
+
+########################################第三部分是編譯Kernel########################################
+
+1.Ctrl+Alt+T 開啟Terminal
+
+2.安裝必需套件
+sudo apt-get install fakeroot build-essential kernel-package wget bzip2
+sudo apt-get install crash kexec-tools makedumpfile kernel-wedge
+sudo apt-get install linux-image-$(uname -r)
+sudo apt-get install git libncurses5 libncurses5-dev libnewt-dev
+sudo apt-get install libncurses5-dev kernel-package
+
+
+3.建造資料夾
+mkdir ~/src
+
+4.cd ~/src
+
+5.下載kernel source code 到資料夾
+apt-get source linux-image-$(uname -r)
+
+6.配置kernel
+cd linux-3.2.0 (這邊注意看說你是載到哪個資料夾)
+
+5.編譯準備 
+sudo make-kpkg clean
+
+6.開始編譯 
+sudo fakeroot make-kpkg --initrd --append-to-version=-b0130400XX kernel_image kernel_headers --append-to-version=-b0130400XX 
+XX須自行修改成學號
+約需1.5~3HR
+
+7.編譯完後 
+cd .. 
+
+8.ls 可以看到linux-image...deb & linux-headers...deb
+
+9. 安裝Kernel
+   sudo dpkg -i linux-image..._i386.deb
+   sudo dpkg -i linux-headers...deb
+
+10.重新啟動
+
+11.開啟Terminal 指令  檢查版本 uname -r 或是 uname -a
+
+########################################第四部分是SSH########################################
+
+1.因為助教要求要SSH連線到Linux 所以要準備SSH
+
+2.sudo apt-get install ssh
+
+3.VirtualBox "設定值"-"網路"-"連接埠轉送"-"新增規則"-"主機連接埠"2222-"客體連接埠"22
+
+4.關閉防火牆測試 ssh -p 2222 140.117.180.XXX 出現Login提示即為成功

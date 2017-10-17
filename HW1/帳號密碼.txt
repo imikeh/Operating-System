@@ -1,0 +1,8 @@
+We have setup a new SSH account for b013040049 on OSLab Homework server 
+Server address is at: 140.117.176.180 or (hw.oslab.cse.nsysu.edu.tw.) 
+Your account is: b013040049 
+Your new password is: nclvATel
+
+scp ./* b013040049@140.117.176.180:hw1
+
+ssh b013040049@140.117.176.180

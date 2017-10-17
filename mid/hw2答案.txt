@@ -1,0 +1,72 @@
+1.
+Yes it can. The memory word is used as a flag, 
+with 0 meaning that no one is using the critical section and 1 meaning that someone is using them.
+ Put a 1 in the register, and swap the memory word and the register. 
+If the register contains a 0 after the swap, access has been granted. 
+If it contains a 1, access has been denied. When a process is done, it stores a 0 in the flag in memory
+
+第二版
+
+Yes. When the register's contents get swapped with the memory word, even if it is called by multiple processes nearly simultaneously, 
+whatever value used to be in the register will be swapped into the memory word. 
+The value that was originally in the register can't be lost, since the swapping is done in a "single indivisible action" and can't be interrupted.
+
+
+
+2.
+(a) Q = INFINITY
+
+Processes will run until they block because the CPU won't interrupt them. So for each I/O cycle, S units of overhead (besides the actual time it takes) will be needed to accomplish T units of useful work. So,
+
+CPU Efficiency: T / (T + S)
+
+Example: if the average before blocking is 10 seconds and the average process switch time is 2 seconds, the CPU efficiency is 10/12 = 83%
+
+(b) Q > T
+
+The answer is the same... processes will run until they block since the quantum is bigger than their mean time before blocking on an I/O.
+
+For completness, here are some other cases:
+
+(c) S < Q < T :
+
+The number of switches required is T/Q. Example: average: 10 secs and quantum of 8 secs. The CPU will switch the process once at the 8th second. The time wasted is therefore S * T/Q. Therefore,
+
+CPU Efficiency: T/(T + S * T/Q) = Q/(Q + S)
+
+(d) S = Q :
+
+Same thing as above. If S=Q, the equation evalutes to 1/2 = 50%.
+
+(e) Q nearly 0 :
+
+This one I'm not quite sure... but as Q goes to 0, CPU efficiency also tends to deteriorate and goes to 0 as well.
+
+第二版
+
+# of times switched = (T/Q) -> Time wasted switching = (T/Q) * S
+so, efficiency = T / ( T + Time wasted switching ) = T / (T + ST/Q)
+
+a) S = 0 -> CPU Efficiency = T / T = 100%
+b) S = 0 -> CPU Efficiency = T / T = 100%
+c) CPU Efficiency = T / ((ST/Q) + T) = (varies from 100% down to 50% depending on how much less than T Q is)
+d) S = Q -> CPU Efficiency = T / ((QT/Q) + T) = T / 2T = 50%
+e) Q ~= 0 -> CPU Efficiency = T / ((ST/Q) + T) = T / ~infinity = ~0% 
+
+3.
+Either
+
+receive(A, messageA);
+receive(B, messageB);
+
+or
+
+receive(B, messageB);
+receive(A, messageA);
+
+will be okay.
+
+
+4.
+
+  A1 B1 B2 D2 
